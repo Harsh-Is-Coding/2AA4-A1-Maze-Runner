@@ -13,6 +13,7 @@ public class Maze {
 
     public Maze(String filePath) {
         initializeGrid(filePath);
+        findEntryPos();
     }
 
     private void initializeGrid(String filePath) {
@@ -50,6 +51,27 @@ public class Maze {
         } catch (Exception e) {
             logger.error("/!\\ An error has occurred /!\\");
             logger.error(e.getMessage());
+        }
+    }
+
+    public void findEntryPos() {
+        logger.info("finding entry pos");
+        for (int i = 0; i < grid.length; i++) {
+            if (grid[0][i] == ' ') {
+                leftEntryPos = new int[2];
+                leftEntryPos[0] = i;
+                leftEntryPos[1] = 0;
+                break;
+            }
+
+        }
+        for (int i = 0; i < grid.length; i++) {
+            if (grid[grid[0].length - 1][i] == ' ') {
+                rightEntryPos = new int[2];
+                rightEntryPos[0] = i;
+                rightEntryPos[1] = grid[0].length - 1;
+                break;
+            }
         }
     }
 
