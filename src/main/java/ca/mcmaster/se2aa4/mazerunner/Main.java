@@ -26,27 +26,28 @@ public class Main {
        try {
            CommandLine cmd =  parser.parse(options, args);
 
-            if (cmd.hasOption("i")) {
+            if (cmd.hasOption("p")) {
                 try {
-                    logger.info("**** Reading the maze from file " + cmd.getOptionValue("i"));
-                    BufferedReader reader = new BufferedReader(new FileReader(cmd.getOptionValue("i")));
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        for (int idx = 0; idx < line.length(); idx++) {
-                            if (line.charAt(idx) == '#') {
-                                logger.info("WALL ");
-                            } else if (line.charAt(idx) == ' ') {
-                                logger.info("PASS ");
-                            }
-                        }
-                        logger.info(System.lineSeparator());
-                    }
+                    Maze maze = new Maze(cmd.getOptionValue("i"));
+                    Explorer explorer = new Explorer(0, 0, 'R');
+                    Path path = new Path(cmd.getOptionValue("p"), false);
+                    logger.info("**** Reading the maze from file " + cmd.getOptionValue("i") + "with path " + cmd.getOptionValue("p"));
+
                 } catch (Exception e) {
                     logger.error("/!\\ An error has occured /!\\");
                 }
-            } else if (cmd.hasOption("p")) {
                 logger.info("**** Computing path");
                 logger.warn("PATH NOT COMPUTED");
+            } else if (cmd.hasOption("i")) {
+                try {
+                    Maze maze = new Maze(cmd.getOptionValue("i"));
+                    Explorer explorer = new Explorer(0, 0, 'R');
+                    Path path = new Path("", false);
+                    logger.info("**** Reading the maze from file " + cmd.getOptionValue("i"));
+
+                } catch (Exception e) {
+                    logger.error("/!\\ An error has occured /!\\");
+                }
             }
         }catch( ParseException exp){
            logger.error("/!\\ An error has occured with parser/!\\");
