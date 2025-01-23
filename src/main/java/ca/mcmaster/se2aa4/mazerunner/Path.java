@@ -3,11 +3,31 @@ package ca.mcmaster.se2aa4.mazerunner;
 import java.util.ArrayList;
 
 public class Path {
-    private ArrayList<String> path;
+    private ArrayList<Character> path;
     public Path(String path, boolean factorized) {
-        if (!factorized) this.path = new ArrayList<>();
-        else this.path = new ArrayList<>();
+        if(!factorized) {
+            ArrayList<Character> tempPath = new ArrayList<>();
+            for(char c : path.toCharArray()) {
+                tempPath.add(c);
+            }
 
+            this.path = tempPath;
+        }else{
+            ArrayList<Character> tempPath = new ArrayList<>();
+            for(char c : path.toCharArray()) {
+                tempPath.add(c);
+            }
+
+            this.path = tempPath;
+        }
+
+    }
+
+    public void add(char c) {
+        path.add(c);
+    }
+    public ArrayList<Character> getPath() {
+        return path;
     }
 
     public boolean checkPath(Maze maze) {
@@ -19,7 +39,11 @@ public class Path {
     }
 
     public String toString() {
-        return "";
+        String res = "";
+        for(Character c : path) {
+            res += c;
+        }
+        return res;
     }
 
 }
