@@ -22,27 +22,24 @@ public class Maze {
             String line;
             int rows = 0;
             int cols = 0;
-            // First pass: read lines to determine grid size
             while ((line = reader.readLine()) != null) {
                 cols = Math.max(cols, line.length());
                 rows++;
             }
 
-            // Now initialize the grid with the correct dimensions
-            grid = new char[cols][rows];
+            grid = new char[rows][cols];
 
-            // Second pass: populate the grid
-            reader.close(); // Close and reopen the file for the second pass
+            reader.close();
             reader = new BufferedReader(new FileReader(filePath));
             int currentRow = 0;
             while ((line = reader.readLine()) != null) {
-                for (int idx = 0; idx < line.length(); idx++) {
-                    if (line.charAt(idx) == '#') {
+                for (int x = 0; x < line.length(); x++) {
+                    if (line.charAt(x) == '#') {
                         logger.info("WALL ");
-                        setGrid(idx, currentRow, '#');
-                    } else if (line.charAt(idx) == ' ') {
+                        setGrid(x, currentRow, '#');
+                    } else if (line.charAt(x) == ' ') {
                         logger.info("PASS ");
-                        setGrid(idx, currentRow, ' ');
+                        setGrid(x, currentRow, ' ');
                     }
                 }
                 currentRow++;
@@ -56,20 +53,15 @@ public class Maze {
 
     public void findEntryPos() {
         logger.info("finding entry pos");
-        for (int i = 0; i < grid.length; i++) {
-            if (grid[0][i] == ' ') {
-                leftEntryPos = new int[2];
-                leftEntryPos[0] = i;
-                leftEntryPos[1] = 0;
+        for (int y = 0; y < grid.length; y++) {
+            if (grid[y][0] == ' ') {
+                leftEntryPos = new int[]{0, y};
                 break;
             }
-
         }
-        for (int i = 0; i < grid.length; i++) {
-            if (grid[grid[0].length - 1][i] == ' ') {
-                rightEntryPos = new int[2];
-                rightEntryPos[0] = i;
-                rightEntryPos[1] = grid[0].length - 1;
+        for (int y = 0; y < grid.length; y++) {
+            if (grid[y][grid[0].length - 1] == ' ') {
+                rightEntryPos = new int[]{grid[0].length - 1, y};
                 break;
             }
         }
@@ -80,15 +72,15 @@ public class Maze {
     }
 
     public void setGrid(int x, int y, char c) {
-        this.grid[x][y] = c;
+        this.grid[y][x] = c;
     }
 
     public boolean isWall(int x, int y) {
-        return grid[x][y] == '#';
+        return grid[y][x] == '#';
     }
 
     public boolean isPass(int x, int y) {
-        return grid[x][y] == ' ';
+        return grid[y][x] == ' ';
     }
 
     public int[] getLeftEntryPos() {

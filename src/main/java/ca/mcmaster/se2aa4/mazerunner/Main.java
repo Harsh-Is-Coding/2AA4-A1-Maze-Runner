@@ -29,9 +29,32 @@ public class Main {
             if (cmd.hasOption("p")) {
                 try {
                     Maze maze = new Maze(cmd.getOptionValue("i"));
-                    Explorer explorer = new Explorer(0, 0, 'R');
+                    Explorer explorerLeft = new Explorer(maze.getLeftEntryPos()[0], maze.getLeftEntryPos()[1], 'R', maze);
                     Path path = new Path(cmd.getOptionValue("p"), false);
-                    logger.info("**** Reading the maze from file " + cmd.getOptionValue("i") + "with path " + cmd.getOptionValue("p"));
+                    logger.info("**** Reading the maze from file " + cmd.getOptionValue("i") + " with path " + cmd.getOptionValue("p"));
+
+                    char [] mazePath = cmd.getOptionValue("p").toCharArray();
+                    boolean valid = true;
+
+                    for (char ch : mazePath) {
+                        if(ch ==  'R'){
+                            explorerLeft.turnRight();
+                        }else if(ch == 'L'){
+                            explorerLeft.turnLeft();
+                        }else if(ch == 'F'){
+                            valid  = explorerLeft.moveForward();
+                        }else{
+                            logger.warn("Unrecognized character " + ch);
+                            break;
+                        }
+
+                        if(!valid){
+                            logger.warn("invalid move ");
+                            break;
+                        }
+
+                        logger.info("**** Move " + ch + " completed");
+                    }
 
                 } catch (Exception e) {
                     logger.error("/!\\ An error has occured /!\\");
@@ -41,7 +64,7 @@ public class Main {
             } else if (cmd.hasOption("i")) {
                 try {
                     Maze maze = new Maze(cmd.getOptionValue("i"));
-                    Explorer explorer = new Explorer(0, 0, 'R');
+                    Explorer explorer = new Explorer(0, 0, 'R', maze);
                     Path path = new Path("", false);
                     logger.info("**** Reading the maze from file " + cmd.getOptionValue("i"));
 
