@@ -21,14 +21,17 @@ public class Main {
        try {
            CommandLine cmd =  parser.parse(options, args);
 
+
+           //check for path input
             if (cmd.hasOption("p")) {
                 try {
+
                     Maze maze = new Maze(cmd.getOptionValue("i"));
                     Path path = new Path(cmd.getOptionValue("p"), false);
                     Explorer explorerLeft = new Explorer(maze.getLeftEntryPos()[0], maze.getLeftEntryPos()[1], 'R', maze,  path);
                     logger.info("**** Reading the maze from file " + cmd.getOptionValue("i") + " with path " + cmd.getOptionValue("p"));
 
-
+                    //TODO add path functionality
 
 
                 } catch (Exception e) {
@@ -41,6 +44,7 @@ public class Main {
                     Maze maze = new Maze(cmd.getOptionValue("i"));
                     Path path = new Path("", false);
                     Explorer explorer = new Explorer(maze.getLeftEntryPos()[0], maze.getLeftEntryPos()[1], 'R', maze,path );
+                    //TODO add rightside entry aswell
                     logger.info("**** Reading the maze from file " + cmd.getOptionValue("i"));
                     explorer.solveMaze();
 

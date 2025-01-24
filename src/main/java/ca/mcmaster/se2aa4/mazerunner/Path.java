@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class Path {
     private ArrayList<Character> path;
     public Path(String path, boolean factorized) {
+
+        //TODO check if factorized and store accordingly
         if(!factorized) {
             ArrayList<Character> tempPath = new ArrayList<>();
             for(char c : path.toCharArray()) {

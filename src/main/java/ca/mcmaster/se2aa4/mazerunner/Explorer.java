@@ -16,9 +16,11 @@ public class Explorer {
     }
 
     public boolean solveMaze(){
+        //TODO add rightHand algo
         Path mazePath = new Path("", false);
         boolean valid = true;
 
+        //keep moving forward till failure
         while(valid){
             valid = moveForward();
 
@@ -29,6 +31,7 @@ public class Explorer {
                 return false;
             }
 
+            //check if at exit point
             if(direction == 'R' && getPosX() == maze.getRightEntryPos()[0] && getPosY() == maze.getRightEntryPos()[1]){
                 System.out.println("success");
                 System.out.println("path is " + path.toString());
@@ -44,6 +47,7 @@ public class Explorer {
         currentPos[0] = posX;
         currentPos[1] = posY;
 
+        //check if at exit point
         if(direction == 'R' && currentPos[0] == maze.getRightEntryPos()[0] && currentPos[1] == maze.getRightEntryPos()[1]){
             System.out.println("successful ended on Right at "+currentPos[0]+" "+currentPos[1]);
             return true;

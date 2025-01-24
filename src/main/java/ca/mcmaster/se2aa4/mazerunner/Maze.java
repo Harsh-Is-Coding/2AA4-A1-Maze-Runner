@@ -22,6 +22,8 @@ public class Maze {
             String line;
             int rows = 0;
             int cols = 0;
+
+            //figure out size of maze to create array
             while ((line = reader.readLine()) != null) {
                 cols = Math.max(cols, line.length());
                 rows++;
@@ -29,9 +31,12 @@ public class Maze {
 
             grid = new char[rows][cols];
 
+            //restart reader for grid input
             reader.close();
             reader = new BufferedReader(new FileReader(filePath));
             int currentRow = 0;
+
+            //add all maze properties to the grid
             while ((line = reader.readLine()) != null) {
                 for (int x = 0; x < line.length(); x++) {
                     if (line.charAt(x) == '#') {
@@ -53,12 +58,16 @@ public class Maze {
 
     public void findEntryPos() {
         logger.info("finding entry pos");
+
+        //loop through left col to find left entry pos
         for (int y = 0; y < grid.length; y++) {
             if (grid[y][0] == ' ') {
                 leftEntryPos = new int[]{0, y};
                 break;
             }
         }
+
+        //loop through rightmost col to find right entry pos
         for (int y = 0; y < grid.length; y++) {
             if (grid[y][grid[0].length - 1] == ' ') {
                 rightEntryPos = new int[]{grid[0].length - 1, y};
@@ -67,11 +76,13 @@ public class Maze {
         }
     }
 
+
     public char[][] getGrid() {
         return grid;
     }
 
     public void setGrid(int x, int y, char c) {
+        //TODO add validation for valid char
         this.grid[y][x] = c;
     }
 
