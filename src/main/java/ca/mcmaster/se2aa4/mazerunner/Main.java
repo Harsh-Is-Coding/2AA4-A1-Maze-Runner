@@ -27,9 +27,24 @@ public class Main {
                 try {
 
                     Maze maze = new Maze(cmd.getOptionValue("i"));
-                    Path path = new Path(cmd.getOptionValue("p"), false);
+
+                    //check if path is factorized
+                    boolean factorized = false;
+                    for (char c : cmd.getOptionValue("p").toCharArray()) {
+                        if (Character.isDigit(c)) {
+                            factorized = true;
+                        }
+                    }
+
+                    Path path = new Path(cmd.getOptionValue("p"), factorized);
                     Explorer explorerLeft = new Explorer(maze.getLeftEntryPos()[0], maze.getLeftEntryPos()[1], 'R', maze,  path);
                     logger.info("**** Reading the maze from file " + cmd.getOptionValue("i") + " with path " + cmd.getOptionValue("p"));
+                    if(factorized){
+                        logger.info("**** to string " + path.toString());
+                    }
+                    else{
+                        logger.info("**** factorized path " + path.toFactorizedPath());
+                    }
 
                     //TODO add path functionality
 
