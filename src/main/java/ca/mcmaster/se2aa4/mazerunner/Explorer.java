@@ -19,49 +19,54 @@ public class Explorer {
         this.path = path;
     }
 
-    public boolean solveMaze(){
+    public String solveMaze(){
         //TODO add rightHand algo
         Path mazePath = new Path("", false);
-        boolean valid = true;
+        boolean atEnd = false;
 
-        //keep moving forward till failure
-        while(valid){
-            valid = moveForward();
-
-            if(valid){
-                path.add('F');
+        while (!atEnd){
+            if(checkRightSideIsWall()){
+                if(checkFrontSideIsWall()){
+                    turnLeft();
+                    mazePath.add('L');
+                }else{
+                    moveForward();
+                    mazePath.add('F');
+                }
             }else{
-                System.out.println("maze failed at position " + posX + ", " + posY);
-                return false;
+                turnRight();
+                mazePath.add('R');
+                moveForward();
+                mazePath.add('F');
+            }
+            if(posX == maze.getRightEntryPos()[0] && posY == maze.getRightEntryPos()[1]){
+                atEnd = true;
+            }else if(posX == maze.getLeftEntryPos()[0] && posY == maze.getLeftEntryPos()[1]){
+                atEnd = true;
             }
 
-            //check if at exit point
-            if(direction == 'R' && getPosX() == maze.getRightEntryPos()[0] && getPosY() == maze.getRightEntryPos()[1]){
-                System.out.println("success");
-                System.out.println("path is " + path.toString());
-                return true;
-            } else if (direction == 'L'  && getPosX() == maze.getLeftEntryPos()[0] && getPosY() == maze.getLeftEntryPos()[1]) {
-                System.out.println("success");
-                System.out.println("path is " + path.toString());
-                return true;
-            }
+
+
         }
 
-        int[] currentPos = new int[2];
-        currentPos[0] = posX;
-        currentPos[1] = posY;
+        return mazePath.toFactorizedPath();
 
-        //check if at exit point
-        if(direction == 'R' && currentPos[0] == maze.getRightEntryPos()[0] && currentPos[1] == maze.getRightEntryPos()[1]){
-            System.out.println("successful ended on Right at "+currentPos[0]+" "+currentPos[1]);
-            return true;
-        }else if(direction == 'L' && currentPos[0] == maze.getLeftEntryPos()[0] && currentPos[1] == maze.getLeftEntryPos()[1]){
-            System.out.println("successful ended on Left at "+currentPos[0]+" "+currentPos[1]);
-            return true;
-        }else{
-            return false;
-        }
+    }
 
+    public boolean checkRightSideIsWall(){
+        if(direction == 'U') return maze.isWall(posX+1, posY);
+        else if(direction == 'D') return maze.isWall(posX-1, posY);
+        else if(direction == 'L') return maze.isWall(posX, posY-1);
+        else if(direction == 'R') return maze.isWall(posX, posY+1);
+        else return false;
+    }
+
+    public boolean checkFrontSideIsWall(){
+        if(direction == 'U') return maze.isWall(posX, posY-1);
+        else if(direction == 'D') return maze.isWall(posX, posY+1);
+        else if(direction == 'L') return maze.isWall(posX-1, posY);
+        else if(direction == 'R') return maze.isWall(posX+1, posY);
+        else return false;
     }
     public boolean validatePath(){
         boolean valid = true;

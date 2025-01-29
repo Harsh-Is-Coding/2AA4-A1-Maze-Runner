@@ -50,7 +50,6 @@ public class Main {
                         System.out.println("incorrect path");
                     }
 
-                    //TODO add path functionality
 
 
                 } catch (Exception e) {
@@ -65,7 +64,7 @@ public class Main {
                     Explorer explorer = new Explorer(maze.getLeftEntryPos()[0], maze.getLeftEntryPos()[1], 'R', maze,path );
                     //TODO add rightside entry aswell
                     logger.info("**** Reading the maze from file " + cmd.getOptionValue("i"));
-                    explorer.solveMaze();
+                    System.out.println(explorer.solveMaze());
 
                 } catch (Exception e) {
                     logger.error("/!\\ An error has occured /!\\");
