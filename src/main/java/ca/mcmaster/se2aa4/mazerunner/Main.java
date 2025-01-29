@@ -38,12 +38,16 @@ public class Main {
 
                     Path path = new Path(cmd.getOptionValue("p"), factorized);
                     Explorer explorerLeft = new Explorer(maze.getLeftEntryPos()[0], maze.getLeftEntryPos()[1], 'R', maze,  path);
+                    Explorer explorerRight = new Explorer(maze.getRightEntryPos()[0], maze.getRightEntryPos()[1], 'L', maze,  path );
                     logger.info("**** Reading the maze from file " + cmd.getOptionValue("i") + " with path " + cmd.getOptionValue("p"));
-                    if(factorized){
-                        logger.info("**** to string " + path.toString());
-                    }
-                    else{
-                        logger.info("**** factorized path " + path.toFactorizedPath());
+
+                    logger.info("**** Computing path");
+                    boolean rightPath = explorerRight.validatePath();
+                    boolean leftPath = explorerLeft.validatePath();
+                    if (rightPath || leftPath) {
+                        System.out.println("correct path");
+                    }else{
+                        System.out.println("incorrect path");
                     }
 
                     //TODO add path functionality
@@ -52,8 +56,8 @@ public class Main {
                 } catch (Exception e) {
                     logger.error("/!\\ An error has occured /!\\");
                 }
-                logger.info("**** Computing path");
-                logger.warn("PATH NOT COMPUTED");
+
+
             } else if (cmd.hasOption("i")) {
                 try {
                     Maze maze = new Maze(cmd.getOptionValue("i"));

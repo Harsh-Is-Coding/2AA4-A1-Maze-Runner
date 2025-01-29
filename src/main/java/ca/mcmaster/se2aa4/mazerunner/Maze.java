@@ -82,7 +82,6 @@ public class Maze {
     }
 
     public void setGrid(int x, int y, char c) {
-        //TODO add validation for valid char
         this.grid[y][x] = c;
     }
 

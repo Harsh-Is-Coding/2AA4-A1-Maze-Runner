@@ -1,6 +1,10 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class Explorer {
+    private static final Logger log = LogManager.getLogger(Explorer.class);
     private int posX;
     private int posY;
     private char direction;
@@ -55,6 +59,42 @@ public class Explorer {
             System.out.println("successful ended on Left at "+currentPos[0]+" "+currentPos[1]);
             return true;
         }else{
+            return false;
+        }
+
+    }
+    public boolean validatePath(){
+        boolean valid = true;
+        String pathString = path.toString();
+
+        for(char c : pathString.toCharArray()){
+            if(c == 'F'){
+                valid = moveForward();
+            }else if(c == 'R'){
+                turnRight();
+            }else if(c == 'L'){
+                turnLeft();
+            }else if(Character.isWhitespace(c)){
+                continue;
+            }else{
+                log.error(c + " is not a valid path");
+                return false;
+            }
+
+            if(!valid){
+                log.error("not a valid forward move at position " + posX + ", " + posY);
+                return false;
+            }
+        }
+
+        if(posX == maze.getRightEntryPos()[0] && posY == maze.getRightEntryPos()[1]){
+            log.info("successful ended on Right at "+posX+" "+posY);
+            return true;
+        }else if(posX == maze.getLeftEntryPos()[0] && posY == maze.getLeftEntryPos()[1]){
+            log.info("successful ended on Left at "+posX+" "+posY);
+            return true;
+        }else{
+            log.info("failed maze at position " + posX + ", " + posY);
             return false;
         }
 
