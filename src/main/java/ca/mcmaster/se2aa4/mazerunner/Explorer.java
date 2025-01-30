@@ -10,46 +10,19 @@ public class Explorer {
     private char direction;
     Maze maze;
     Path path;
+    private MazeSolver solver;
 
-    public Explorer(int startX, int startY, char startDirection, Maze maze, Path path) {
+    public Explorer(int startX, int startY, char startDirection, Maze maze, Path path, MazeSolver solver) {
         this.posX = startX;
         this.posY = startY;
         this.direction = startDirection;
         this.maze = maze;
         this.path = path;
+        this.solver = solver;
     }
 
     public String solveMaze(){
-        //TODO add rightHand algo
-        Path mazePath = new Path("", false);
-        boolean atEnd = false;
-
-        while (!atEnd){
-            if(checkRightSideIsWall()){
-                if(checkFrontSideIsWall()){
-                    turnLeft();
-                    mazePath.add('L');
-                }else{
-                    moveForward();
-                    mazePath.add('F');
-                }
-            }else{
-                turnRight();
-                mazePath.add('R');
-                moveForward();
-                mazePath.add('F');
-            }
-            if(posX == maze.getRightEntryPos()[0] && posY == maze.getRightEntryPos()[1]){
-                atEnd = true;
-            }else if(posX == maze.getLeftEntryPos()[0] && posY == maze.getLeftEntryPos()[1]){
-                atEnd = true;
-            }
-
-
-
-        }
-
-        return mazePath.toFactorizedPath();
+        return solver.solve(this);
 
     }
 
@@ -141,7 +114,7 @@ public class Explorer {
         else if (direction == 'R') setDirection('D');
     }
 
-    public void setDirection(char direction) {
+    private void setDirection(char direction) {
         this.direction = direction;
     }
 

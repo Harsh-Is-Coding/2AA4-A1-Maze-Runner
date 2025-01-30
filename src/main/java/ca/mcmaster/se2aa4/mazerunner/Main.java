@@ -37,8 +37,9 @@ public class Main {
                     }
 
                     Path path = new Path(cmd.getOptionValue("p"), factorized);
-                    Explorer explorerLeft = new Explorer(maze.getLeftEntryPos()[0], maze.getLeftEntryPos()[1], 'R', maze,  path);
-                    Explorer explorerRight = new Explorer(maze.getRightEntryPos()[0], maze.getRightEntryPos()[1], 'L', maze,  path );
+                    MazeSolver solver = new RightHandSolver();
+                    Explorer explorerLeft = new Explorer(maze.getLeftEntryPos()[0], maze.getLeftEntryPos()[1], 'R', maze,  path, solver);
+                    Explorer explorerRight = new Explorer(maze.getRightEntryPos()[0], maze.getRightEntryPos()[1], 'L', maze,  path, solver);
                     logger.info("**** Reading the maze from file " + cmd.getOptionValue("i") + " with path " + cmd.getOptionValue("p"));
 
                     logger.info("**** Computing path");
@@ -61,8 +62,8 @@ public class Main {
                 try {
                     Maze maze = new Maze(cmd.getOptionValue("i"));
                     Path path = new Path("", false);
-                    Explorer explorer = new Explorer(maze.getLeftEntryPos()[0], maze.getLeftEntryPos()[1], 'R', maze,path );
-                    //TODO add rightside entry aswell
+                    MazeSolver solver = new RightHandSolver();
+                    Explorer explorer = new Explorer(maze.getLeftEntryPos()[0], maze.getLeftEntryPos()[1], 'R', maze,path, solver);
                     logger.info("**** Reading the maze from file " + cmd.getOptionValue("i"));
                     System.out.println(explorer.solveMaze());
 

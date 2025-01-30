@@ -77,10 +77,6 @@ public class Maze {
     }
 
 
-    public char[][] getGrid() {
-        return grid;
-    }
-
     public void setGrid(int x, int y, char c) {
         this.grid[y][x] = c;
     }
