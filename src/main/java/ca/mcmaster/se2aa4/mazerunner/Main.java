@@ -23,7 +23,7 @@ public class Main {
 
 
            //check for path input
-            if (cmd.hasOption("p")) {
+            if (cmd.hasOption("p") && cmd.hasOption("i")) {
                 try {
 
                     Maze maze = new Maze(cmd.getOptionValue("i"));
@@ -36,12 +36,15 @@ public class Main {
                         }
                     }
 
+
+                    //init objects
                     Path path = new Path(cmd.getOptionValue("p"), factorized);
                     MazeSolver solver = new RightHandSolver();
                     Explorer explorerLeft = new Explorer(maze.getLeftEntryPos()[0], maze.getLeftEntryPos()[1], 'R', maze,  path, solver);
                     Explorer explorerRight = new Explorer(maze.getRightEntryPos()[0], maze.getRightEntryPos()[1], 'L', maze,  path, solver);
                     logger.info("**** Reading the maze from file " + cmd.getOptionValue("i") + " with path " + cmd.getOptionValue("p"));
 
+                    //validate path from both left and right side
                     logger.info("**** Computing path");
                     boolean rightPath = explorerRight.validatePath();
                     boolean leftPath = explorerLeft.validatePath();
@@ -60,17 +63,22 @@ public class Main {
 
             } else if (cmd.hasOption("i")) {
                 try {
+                    //init objects
                     Maze maze = new Maze(cmd.getOptionValue("i"));
                     Path path = new Path("", false);
                     MazeSolver solver = new RightHandSolver();
                     Explorer explorer = new Explorer(maze.getLeftEntryPos()[0], maze.getLeftEntryPos()[1], 'R', maze,path, solver);
                     logger.info("**** Reading the maze from file " + cmd.getOptionValue("i"));
+
+                    //solve maze and output path
                     System.out.println(explorer.solveMaze());
 
                 } catch (Exception e) {
                     logger.error("/!\\ An error has occured /!\\");
                     logger.error(e.getMessage());
                 }
+            }else{
+                logger.info("**** No options specified or Bad options");
             }
         }catch( ParseException exp){
            logger.error("/!\\ An error has occured with parser/!\\");

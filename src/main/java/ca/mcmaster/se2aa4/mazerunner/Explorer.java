@@ -21,11 +21,13 @@ public class Explorer {
         this.solver = solver;
     }
 
+    //run the solver based on interface, allows for adding diff in the future
     public String solveMaze(){
         return solver.solve(this);
 
     }
 
+    // methods for right hand algo
     public boolean checkRightSideIsWall(){
         if(direction == 'U') return maze.isWall(posX+1, posY);
         else if(direction == 'D') return maze.isWall(posX-1, posY);
@@ -41,6 +43,8 @@ public class Explorer {
         else if(direction == 'R') return maze.isWall(posX+1, posY);
         else return false;
     }
+
+    //move through maze to check inputted path
     public boolean validatePath(){
         boolean valid = true;
         String pathString = path.toString();
@@ -78,10 +82,9 @@ public class Explorer {
 
     }
 
-    public Path getPath() {
-        return path;
-    }
 
+
+    //methods to move through maze
     public boolean moveForward() {
         if (direction == 'U' && maze.isPass(posX, posY - 1)) {
             posY--;
@@ -114,6 +117,7 @@ public class Explorer {
         else if (direction == 'R') setDirection('D');
     }
 
+    //methods used for initialization and interaction
     private void setDirection(char direction) {
         this.direction = direction;
     }
@@ -126,7 +130,4 @@ public class Explorer {
         return posY;
     }
 
-    public char getDirection() {
-        return direction;
-    }
 }

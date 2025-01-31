@@ -7,7 +7,11 @@ public class RightHandSolver implements MazeSolver {
         Path mazePath = new Path("", false);
         boolean atEnd = false;
 
+
+        //keep going till end of maze
         while (!atEnd){
+
+            //keep hand on right wall
             if(explorer.checkRightSideIsWall()){
                 if(explorer.checkFrontSideIsWall()){
                     explorer.turnLeft();
@@ -17,11 +21,14 @@ public class RightHandSolver implements MazeSolver {
                     mazePath.add('F');
                 }
             }else{
+                //if not right wall then turn
                 explorer.turnRight();
                 mazePath.add('R');
                 explorer.moveForward();
                 mazePath.add('F');
             }
+
+            //check for either end position
             if(explorer.getPosX() == explorer.maze.getRightEntryPos()[0] && explorer.getPosY() == explorer.maze.getRightEntryPos()[1]){
                 atEnd = true;
             }else if(explorer.getPosX() == explorer.maze.getLeftEntryPos()[0] && explorer.getPosY() == explorer.maze.getLeftEntryPos()[1]){
@@ -35,4 +42,6 @@ public class RightHandSolver implements MazeSolver {
         return mazePath.toFactorizedPath();
 
     }
+
+
 }

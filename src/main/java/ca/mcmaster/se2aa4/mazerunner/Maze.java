@@ -18,6 +18,7 @@ public class Maze {
 
     private void initializeGrid(String filePath) {
         try {
+
             BufferedReader reader = new BufferedReader(new FileReader(filePath));
             String line;
             int rows = 0;
@@ -76,7 +77,7 @@ public class Maze {
         }
     }
 
-
+    //methods for interaction between abstractions
     public void setGrid(int x, int y, char c) {
         this.grid[y][x] = c;
     }

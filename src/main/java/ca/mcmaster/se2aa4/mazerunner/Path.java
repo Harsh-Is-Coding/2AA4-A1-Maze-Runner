@@ -3,10 +3,12 @@ package ca.mcmaster.se2aa4.mazerunner;
 import java.util.ArrayList;
 
 public class Path {
+    //always stored as canonical
     private ArrayList<Character> path;
     public Path(String path, boolean factorized) {
 
-        //TODO check if factorized and store accordingly
+        //check if factorized and store accordingly
+
         if(factorized) {
             ArrayList<Character> tempPath = new ArrayList<>();
             for(char c : path.toCharArray()) {
@@ -26,19 +28,14 @@ public class Path {
 
     }
 
+    // path changing methods
     public void add(char c) {
         path.add(c);
     }
-    public ArrayList<Character> getPath() {
-        return path;
-    }
 
-    public boolean checkPath(Maze maze) {
-        return false;
-    }
 
+    //conversion methods
     public String toFactorizedPath() {
-        System.out.println("converting to factorized Path");
         if(path.size() == 1 || path.isEmpty()) return path.toString();
 
         StringBuilder factorizedPath = new StringBuilder();
@@ -62,6 +59,7 @@ public class Path {
             }
         }
 
+        //add leftover count
         if(count > 1){
             factorizedPath.append(count).append(prev);
         }else {
@@ -71,7 +69,6 @@ public class Path {
     }
 
     public void toCannonicalPath(){
-        System.out.println("Converting to Canonical Path...");
         ArrayList<Character> tempPath = new ArrayList<>();
 
         for (int i = 0; i < path.size(); i++) {
@@ -95,6 +92,8 @@ public class Path {
         path = tempPath;
     }
 
+    //specific tostring for path
+    //used for debugging
     public String toString() {
         String res = "";
         for(Character c : path) {
