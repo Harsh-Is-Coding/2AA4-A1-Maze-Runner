@@ -52,7 +52,7 @@ public class Maze {
                 logger.info(System.lineSeparator());
             }
         } catch (Exception e) {
-            logger.error("/!\\ An error has occurred /!\\");
+            System.out.println("/!\\ An error has occured /!\\");
             logger.error(e.getMessage());
         }
     }
@@ -87,7 +87,13 @@ public class Maze {
     }
 
     public boolean isPass(int x, int y) {
-        return grid[y][x] == ' ';
+        try {
+            boolean ret = grid[y][x] == ' ';
+            return ret;
+        }catch (Exception e) {
+            logger.error("index out of bounds");
+            return false;
+        }
     }
 
     public int[] getLeftEntryPos() {

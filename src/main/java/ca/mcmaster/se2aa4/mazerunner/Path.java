@@ -8,6 +8,11 @@ public class Path {
     public Path(String path, boolean factorized) {
 
         //check if factorized and store accordingly
+        if(!path.matches("[0-9FRL\\s]*")){
+            System.out.println("/!\\ An error has occured /!\\");
+            System.out.println("Invalid path");
+            return;
+        }
 
         if(factorized) {
             ArrayList<Character> tempPath = new ArrayList<>();

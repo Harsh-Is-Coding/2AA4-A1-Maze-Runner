@@ -58,6 +58,7 @@ public class Main {
 
                 } catch (Exception e) {
                     logger.error("/!\\ An error has occured /!\\");
+                    logger.info(e.getMessage());
                 }
 
 
@@ -78,10 +79,12 @@ public class Main {
                     logger.error(e.getMessage());
                 }
             }else{
-                logger.info("**** No options specified or Bad options");
+                System.out.println("**** No options specified or Bad options");
             }
         }catch( ParseException exp){
+           System.out.println("**** No options specified or Bad options");
            logger.error("/!\\ An error has occured with parser/!\\");
+           logger.error(exp.getMessage());
         }
 
         logger.info("** End of MazeRunner");
