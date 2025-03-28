@@ -52,7 +52,7 @@ public class Maze {
                 logger.info(System.lineSeparator());
             }
         } catch (Exception e) {
-            System.out.println("/!\\ An error has occured /!\\");
+            System.out.println("/!\\ An error has occured  in grid reading /!\\");
             logger.error(e.getMessage());
         }
     }
