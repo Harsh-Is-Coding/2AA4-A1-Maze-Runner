@@ -12,6 +12,11 @@ public class Explorer {
     Path path;
     private MazeSolver solver;
 
+    //Command Constructors
+    private MoveForwardCommand moveForwardCommand = new MoveForwardCommand(this);
+    private TurnLeftCommand turnLeftCommand = new TurnLeftCommand(this);
+    private TurnRightCommand turnRightCommand = new TurnRightCommand(this);
+
     public Explorer(int startX, int startY, char startDirection, Maze maze, Path path, MazeSolver solver) {
         this.posX = startX;
         this.posY = startY;
@@ -51,11 +56,11 @@ public class Explorer {
 
         for(char c : pathString.toCharArray()){
             if(c == 'F'){
-                valid = moveForward();
+                valid = moveForwardCommand.execute();
             }else if(c == 'R'){
-                turnRight();
+                turnRightCommand.execute();
             }else if(c == 'L'){
-                turnLeft();
+                turnLeftCommand.execute();
             }else if(Character.isWhitespace(c)){
                 continue;
             }else{
@@ -128,6 +133,14 @@ public class Explorer {
 
     public int getPosY() {
         return posY;
+    }
+
+    public Path getPath() {
+        return path;
+    }
+
+    public void setPath(Path path) {
+        this.path = path;
     }
 
 }

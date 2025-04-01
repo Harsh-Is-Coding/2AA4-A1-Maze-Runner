@@ -2,8 +2,13 @@ package ca.mcmaster.se2aa4.mazerunner;
 
 public class RightHandSolver implements MazeSolver {
 
+
     @Override
     public String solve(Explorer explorer) {
+        //Command Constructors
+        MoveForwardCommand moveForwardCommand = new MoveForwardCommand(explorer);
+        TurnLeftCommand turnLeftCommand = new TurnLeftCommand(explorer);
+        TurnRightCommand turnRightCommand = new TurnRightCommand(explorer);
         Path mazePath = new Path("", false);
         boolean atEnd = false;
 
@@ -14,17 +19,17 @@ public class RightHandSolver implements MazeSolver {
             //keep hand on right wall
             if(explorer.checkRightSideIsWall()){
                 if(explorer.checkFrontSideIsWall()){
-                    explorer.turnLeft();
+                    turnLeftCommand.execute();
                     mazePath.add('L');
                 }else{
-                    explorer.moveForward();
+                    moveForwardCommand.execute();
                     mazePath.add('F');
                 }
             }else{
                 //if not right wall then turn
-                explorer.turnRight();
+                turnRightCommand.execute();
                 mazePath.add('R');
-                explorer.moveForward();
+                moveForwardCommand.execute();
                 mazePath.add('F');
             }
 
