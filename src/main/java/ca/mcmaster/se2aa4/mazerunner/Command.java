@@ -9,7 +9,10 @@ public abstract class Command {
     }
 
     void backup() {
-        backupPath = explorer.getPath().toString();
+        backupPath = explorer.getObserverPath();
+        if (backupPath == null) {
+            backupPath = explorer.getPath().toString();
+        }
     }
 
     public void restore() {

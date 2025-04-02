@@ -3,7 +3,10 @@ package ca.mcmaster.se2aa4.mazerunner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Explorer {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Explorer implements Subject {
     private static final Logger log = LogManager.getLogger(Explorer.class);
     private int posX;
     private int posY;
@@ -11,7 +14,7 @@ public class Explorer {
     Maze maze;
     Path path;
     private MazeSolver solver;
-
+    private List<Observer> observers;
     //Command Constructors
     private MoveForwardCommand moveForwardCommand = new MoveForwardCommand(this);
     private TurnLeftCommand turnLeftCommand = new TurnLeftCommand(this);
@@ -24,10 +27,46 @@ public class Explorer {
         this.maze = maze;
         this.path = path;
         this.solver = solver;
+
+
     }
+
+    @Override
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(char move) {
+        if (observers == null) {
+            return;
+        }
+        for (Observer observer : observers) {
+            observer.update(move);
+        }
+    }
+
+    public String getObserverPath() {
+        if (observers == null || observers.isEmpty()) {
+            return null;
+        }
+        String p = observers.getFirst().toString();
+        Path path = new Path(p, false);
+        return path.toFactorizedPath();
+    }
+
+
+
 
     //run the solver based on interface, allows for adding diff in the future
     public String solveMaze(){
+        this.observers = new ArrayList<>();
+        observers.add(new Path("", false));
         return solver.solve(this);
 
     }

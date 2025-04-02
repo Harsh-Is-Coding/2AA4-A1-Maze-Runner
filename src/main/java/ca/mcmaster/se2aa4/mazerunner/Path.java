@@ -2,7 +2,7 @@ package ca.mcmaster.se2aa4.mazerunner;
 
 import java.util.ArrayList;
 
-public class Path {
+public class Path implements Observer {
     //always stored as canonical
     private ArrayList<Character> path;
     public Path(String path, boolean factorized) {
@@ -31,6 +31,11 @@ public class Path {
             this.path = tempPath;
         }
 
+    }
+
+    @Override
+    public void update(char move) {
+        path.add(move);
     }
 
     // path changing methods

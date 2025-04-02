@@ -9,7 +9,6 @@ public class RightHandSolver implements MazeSolver {
         MoveForwardCommand moveForwardCommand = new MoveForwardCommand(explorer);
         TurnLeftCommand turnLeftCommand = new TurnLeftCommand(explorer);
         TurnRightCommand turnRightCommand = new TurnRightCommand(explorer);
-        Path mazePath = new Path("", false);
         boolean atEnd = false;
 
 
@@ -20,17 +19,17 @@ public class RightHandSolver implements MazeSolver {
             if(explorer.checkRightSideIsWall()){
                 if(explorer.checkFrontSideIsWall()){
                     turnLeftCommand.execute();
-                    mazePath.add('L');
+                    explorer.notifyObservers('L');
                 }else{
                     moveForwardCommand.execute();
-                    mazePath.add('F');
+                    explorer.notifyObservers('F');
                 }
             }else{
                 //if not right wall then turn
                 turnRightCommand.execute();
-                mazePath.add('R');
+                explorer.notifyObservers('R');
                 moveForwardCommand.execute();
-                mazePath.add('F');
+                explorer.notifyObservers('F');
             }
 
             //check for either end position
@@ -44,7 +43,7 @@ public class RightHandSolver implements MazeSolver {
 
         }
 
-        return mazePath.toFactorizedPath();
+        return explorer.getObserverPath();
 
     }
 

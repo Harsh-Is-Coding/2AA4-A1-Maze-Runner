@@ -68,7 +68,7 @@ public class Main {
                     Maze maze = new Maze(cmd.getOptionValue("i"));
                     Path path = new Path("", false);
                     MazeSolver solver = new RightHandSolver();
-                    Explorer explorer = new Explorer(maze.getLeftEntryPos()[0], maze.getLeftEntryPos()[1], 'R', maze,path, solver);
+                    Explorer explorer = new Explorer(maze.getLeftEntryPos()[0], maze.getLeftEntryPos()[1], 'R', maze, path, solver);
                     logger.info("**** Reading the maze from file " + cmd.getOptionValue("i"));
 
                     //solve maze and output path
